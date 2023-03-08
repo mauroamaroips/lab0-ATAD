@@ -1,0 +1,154 @@
+This is a C program {\itshape template} tailored for\+:
+
+
+\begin{DoxyItemize}
+\item GCC, GDB, MAKE, VALGRING and DOXYGEN
+\item VS CODE editor
+\end{DoxyItemize}\hypertarget{md_README_autotoc_md1}{}\doxysection{Cloning}\label{md_README_autotoc_md1}
+Check {\bfseries{full example}} below. This just explains the steps.
+
+You can {\itshape clone} this repository with\+:
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\$> git clone https://github.com/estsetubal-\/atad/CProgram\_Template.git <program-\/dir-\/name>}
+
+\end{DoxyCode}
+
+
+where {\ttfamily $<$program-\/dir-\/name$>$} is the new name of the directory that will be created containing the cloned code. You\textquotesingle{}ll now need to open this directory in {\itshape VS Code} as your {\itshape working directory}. The easiest way is just to simply\+:
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\$> code <program-\/dir-\/name>}
+
+\end{DoxyCode}
+
+
+From {\itshape VS Code} you can open an {\itshape integrated terminal}\+: Menu {\bfseries{Terminal $>$ New Terminal}}.\hypertarget{md_README_autotoc_md2}{}\doxysubsection{Full example}\label{md_README_autotoc_md2}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\$> git clone https://github.com/estsetubal-\/atad/CProgram\_Template.git MyOwnCProgram}
+\DoxyCodeLine{\$> code MyOwnCProgram}
+
+\end{DoxyCode}
+\hypertarget{md_README_autotoc_md3}{}\doxysection{Compiling and executing}\label{md_README_autotoc_md3}
+Edit the {\ttfamily makefile} to comply with your source files and then, e.\+g.\+:
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\$> make}
+
+\end{DoxyCode}
+
+
+If you didn\textquotesingle{}t change the name of the {\itshape executable} (by default, {\ttfamily prog}), then\+:
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\$> ./prog}
+
+\end{DoxyCode}
+\hypertarget{md_README_autotoc_md4}{}\doxysection{Using valgrind}\label{md_README_autotoc_md4}
+{\itshape Valgrind} is very useful to detect \char`\"{}memory leaks\char`\"{} if your program uses {\itshape dynamic memory allocation}. You must compile the program with {\itshape debug} symbols and then run the executable through {\ttfamily valgrind}\+:
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\$> make debug}
+\DoxyCodeLine{\$> valgrind -\/-\/leak-\/check=full ./prog }
+
+\end{DoxyCode}
+
+
+Alternatively, you can use the {\itshape bash script} already included\+:
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\$> make debug}
+\DoxyCodeLine{\$> bash mem\_check.sh}
+
+\end{DoxyCode}
+
+
+{\bfseries{When the program exits}} it will present you with memory leak information.\hypertarget{md_README_autotoc_md5}{}\doxysection{Debugging}\label{md_README_autotoc_md5}
+In the {\bfseries{Run}} tab (left side) you should see a green play icon ▶️ at the top beside \char`\"{}gdb -\/ Debug project\char`\"{}. Click on it and the debug will start. Do not forget to set your {\itshape breakpoints}.\hypertarget{md_README_autotoc_md6}{}\doxysection{Generating documentation}\label{md_README_autotoc_md6}
+You\textquotesingle{}ll need {\ttfamily doxygen} installed and follow the doxygen documentation format. A {\ttfamily Doxyfile} is already provided that is suited for the C language. Use\+:
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\$> doxygen Doxyfile}
+
+\end{DoxyCode}
+
+
+and you\textquotesingle{}ll end up with a {\ttfamily html} folder containing the generated documentation.\hypertarget{md_README_autotoc_md7}{}\doxysection{Input Module}\label{md_README_autotoc_md7}
+This template project includes the {\ttfamily input} module. You should use it for {\itshape user input} as it provides a relatively robust mechanism to read mixed data and performs validation.
+
+Below is a sample program which exemplifies the usage of this library\+:
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{preprocessor}{\#include <stdio.h>}}
+\DoxyCodeLine{\textcolor{preprocessor}{\#include <stdlib.h>}}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{input_8h}{input.h}}"{}}}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{keywordtype}{int} main() \{}
+\DoxyCodeLine{}
+\DoxyCodeLine{    \textcolor{comment}{/* simple data formats with validation examples */}}
+\DoxyCodeLine{    \textcolor{keywordtype}{int} value = 0;}
+\DoxyCodeLine{    \textcolor{keywordflow}{do} \{}
+\DoxyCodeLine{        printf(\textcolor{stringliteral}{"{}Integer Value? "{}});}
+\DoxyCodeLine{    \} \textcolor{keywordflow}{while}(!\mbox{\hyperlink{input_8c_acee3bc1638418f65bfd3ba42350798ab}{readInteger}}(\&value)); \textcolor{comment}{/* loops while invalid */}}
+\DoxyCodeLine{        }
+\DoxyCodeLine{    printf(\textcolor{stringliteral}{"{}Integer Value = \%d \(\backslash\)n"{}}, value);}
+\DoxyCodeLine{}
+\DoxyCodeLine{    \textcolor{keywordtype}{double} value2 = 0;}
+\DoxyCodeLine{    \textcolor{keywordflow}{do} \{}
+\DoxyCodeLine{        printf(\textcolor{stringliteral}{"{}Double Value? "{}});}
+\DoxyCodeLine{    \} \textcolor{keywordflow}{while}(!\mbox{\hyperlink{input_8c_a4341a9e5068f7ba95a30bfaea80a1daf}{readDouble}}(\&value2)); \textcolor{comment}{/* loops while invalid */}}
+\DoxyCodeLine{        }
+\DoxyCodeLine{    printf(\textcolor{stringliteral}{"{}Double Value = \%lf \(\backslash\)n"{}}, value2);}
+\DoxyCodeLine{}
+\DoxyCodeLine{    \textcolor{comment}{/* Strings are consumed as-\/is */}}
+\DoxyCodeLine{    \textcolor{keywordtype}{char} text[100];}
+\DoxyCodeLine{    printf(\textcolor{stringliteral}{"{}Text? "{}});}
+\DoxyCodeLine{    \mbox{\hyperlink{input_8c_ad8f014b25c31518c3645f7a3dce2bc0f}{readString}}(text, 100);}
+\DoxyCodeLine{    printf(\textcolor{stringliteral}{"{}Text = \%s \(\backslash\)n"{}}, text);}
+\DoxyCodeLine{}
+\DoxyCodeLine{    \textcolor{comment}{/* Example of the spliting function; use with CSV files later */}}
+\DoxyCodeLine{    \textcolor{keywordtype}{char} line[100] = \textcolor{stringliteral}{"{}Bruno Silva;bruno.silva@estsetubal.ips.pt;;2020/21"{}};}
+\DoxyCodeLine{}
+\DoxyCodeLine{    \textcolor{keywordtype}{char}** tokens = \mbox{\hyperlink{input_8c_a1b3e4cd35e295d1700f54b1e56f1ab9c}{splitString}}(line, 4, \textcolor{stringliteral}{"{};"{}});}
+\DoxyCodeLine{    \textcolor{keywordflow}{for}(\textcolor{keywordtype}{int} i=0; i<4; i++) \{}
+\DoxyCodeLine{        printf(\textcolor{stringliteral}{"{}Token[\%d] = \%s \(\backslash\)n"{}}, i, tokens[i]);}
+\DoxyCodeLine{    \}}
+\DoxyCodeLine{}
+\DoxyCodeLine{    free(tokens); }
+\DoxyCodeLine{}
+\DoxyCodeLine{    \textcolor{keywordflow}{return} 0;}
+\DoxyCodeLine{\}}
+
+\end{DoxyCode}
+
+
+and an example {\itshape user interaction} session\+:
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{Integer Value? 12d}
+\DoxyCodeLine{Integer Value? -\/ 3}
+\DoxyCodeLine{Integer Value? -\/3}
+\DoxyCodeLine{Integer Value = -\/3 }
+\DoxyCodeLine{Double Value? 12.4.5}
+\DoxyCodeLine{Double Value? -\/3.14159}
+\DoxyCodeLine{Double Value = -\/3.141590 }
+\DoxyCodeLine{Text? This some text and a number 7 }
+\DoxyCodeLine{Text = This some text and a number 7 }
+\DoxyCodeLine{Token[0] = Bruno Silva }
+\DoxyCodeLine{Token[1] = bruno.silva@estsetubal.ips.pt }
+\DoxyCodeLine{Token[2] =  }
+\DoxyCodeLine{Token[3] = 2020/21}
+
+\end{DoxyCode}
+ 
